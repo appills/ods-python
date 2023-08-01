@@ -47,8 +47,8 @@ class SLinkedList:
             self.head = node
         else:
             self.tail.next = node
-            self.tail = node
-            self.size = self.size + 1
+        self.tail = node
+        self.size = self.size + 1
         return True
     
     # remove the ith node
