@@ -87,11 +87,17 @@ class SLinkedList:
             self.tail = False
         return val
     
-    # todo this, it might be a d-list thing? I thought there was constant time alg for this?
-    def deque(self):
-        tmp = self.tail
-        self.tail = False
-        return tmp
+    # for queues (FIFO) 
+    # we treat self.head as the front of the line
+    # self.tail is then the back of the line
+    # e.g. [1] -> [2], then enqueue(3) means [1]->[2]->[3]
+    # dequeue() then means pop() and thus [2]->[3]
+    
+    def enqueue(self, val):
+        return self.append(val)
+    
+    def dequeue(self):
+        return self.pop()
     
     # order stuff
     def reverse(self):
@@ -111,9 +117,7 @@ class SLinkedList:
             vals.append(node.val)
             node =  node.next
         return vals
-            
-
-            
+                    
     def second_last(self):
         node = self.get(0)
         count = 0
