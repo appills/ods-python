@@ -172,6 +172,34 @@ class SLinkedListTest(unittest.TestCase):
         self.assertEqual(2, slinked.head.val)
         self.assertEqual(2, slinked.tail.val)
         
+        slinked.enqueue(3)
+        slinked.enqueue(4)
+        self.assertEqual(3, slinked.size)
+        self.assertEqual(2, slinked.head.val)
+        self.assertEqual(4, slinked.tail.val)
+        
+        actual = slinked.dequeue()
+        self.assertEqual(2, actual)
+        self.assertEqual(2, slinked.size)
+        self.assertEqual(3, slinked.head.val)
+        self.assertEqual(4, slinked.tail.val)
+        
+        actual = slinked.dequeue()
+        self.assertEqual(3, actual)
+        self.assertEqual(1, slinked.size)
+        self.assertEqual(4, slinked.head.val)
+        self.assertEqual(4, slinked.tail.val)
+        
+        actual = slinked.dequeue()
+        self.assertEqual(4, actual)
+        self.assertEqual(0, slinked.size)
+        self.assertEqual(False, slinked.head)
+        self.assertEqual(False, slinked.tail)
+        
+        actual = slinked.dequeue()
+        self.assertEqual(False, actual)
+        self.assertEqual(0, slinked.size)
+        
         
     # vaguely a data provider
     def get_slinkedlist(self):
