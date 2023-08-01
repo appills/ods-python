@@ -10,27 +10,46 @@ class SLinkedList:
         self.tail = False
         self.size = 0
     
-    # get the ith   
+    # get the ith node of the list
     def get(self, i):
         node = self.head
-        count = 0
-        if i == 0:
-            return node
-        while node and count < i:
-            node = node.next
-            count = count + 1
+        if i > self.size:
+            node = False
+        else:
+            count = 0
+            if i == 0:
+                return node
+            while node and count < i:
+                node = node.next
+                count = count + 1
         return node
             
-    # set the ith node.val to val - the book is ambiguous by this & add() which is why I'm creating append()
+    # set the ith node.val to val 
     def set(self, i, val):
         node = self.get(i)
         if node:
             node.val = val
+            return True
+        return False
 
     # add val to the ith node  
     def add(self, i, val):
         node = self.get(i)
-        node.val = node.val + val
+        if node:
+            node.val = node.val + val
+            return node.val
+        return False
+
+    # append a node with val to the end of the list - the book calls this "add"
+    def append(self, val):
+        node = Node(val)
+        if self.size == 0:
+            self.head = node
+        else:
+            self.tail.next = node
+            self.tail = node
+            self.size = self.size + 1
+        return True
     
     # remove the ith node
     def remove(self, i):
