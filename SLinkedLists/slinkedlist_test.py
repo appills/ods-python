@@ -101,6 +101,50 @@ class SLinkedListTest(unittest.TestCase):
         slinked = self.get_slinkedlist()
         self.assertEqual(True, slinked.check_size(3))
         self.assertEqual(False, slinked.check_size(4))
+    
+    # test LIFO/FILO stack functionality
+    def test_stack(self):
+        # make sure it instantiated correctly
+        slinked = SLinkedList()
+        self.assertEqual(0, slinked.size)
+        self.assertEqual(False, slinked.head)
+        self.assertEqual(False, slinked.tail)
+        actual = slinked.pop()
+        # make sure an empty list returns False on pop()
+        self.assertEqual(False, actual)
+        # make sure the size didn't decrement
+        self.assertEqual(0, slinked.size)
+        # now push some vals, and ensure the functionality for size = 1
+        slinked.push(3)
+        self.assertEqual(1, slinked.size)
+        self.assertEqual(3, slinked.head.val)
+        self.assertEqual(3, slinked.tail.val)
+        # push another, ensure fnclty for size = 2
+        slinked.push(2)
+        self.assertEqual(2, slinked.size)
+        self.assertEqual(2, slinked.head.val)
+        self.assertEqual(3, slinked.tail.val)
+        # push another, ensure fnctly for size > 2
+        slinked.push(1)
+        self.assertEqual(3, slinked.size)
+        self.assertEqual(1, slinked.head.val)
+        self.assertEqual(3, slinked.tail.val)
+        
+        # obligatory once you pop the fun don't stop
+        actual = slinked.pop()
+        self.assertEqual(1, actual)
+        self.assertEqual(2, slinked.size)
+        self.assertEqual(2, slinked.head.val)
+        self.assertEqual(3, slinked.tail.val)
+        actual = slinked.pop()
+        self.assertEqual(2, actual)
+        self.assertEqual(1, slinked.size)
+        self.assertEqual(3, slinked.head.val)
+        self.assertEqual(3, slinked.tail.val)
+        actual = slinked.pop()
+        self.assertEqual(3, actual)
+        self.assertEqual(False, slinked.head)
+        self.assertEqual(False, slinked.tail)
         
     # vaguely a data provider
     def get_slinkedlist(self):
