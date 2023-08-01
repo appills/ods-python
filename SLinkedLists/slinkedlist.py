@@ -3,12 +3,15 @@ from node import Node
 class SLinkedList:
     head = False
     tail = False
+    count = 0
     
     def __init__(self, head = False, tail = False):
         if head:
             self.head = head
+            self.count = self.count + 1
         if tail:
             self.tail = tail
+            self.count = self.count + 1
     
     # get the ith   
     def get(self, i):
@@ -34,6 +37,8 @@ class SLinkedList:
     
     # remove the ith node
     def remove(self, i):
+        if self.count == 0:
+            return # we have nothing to remove
         # if i = 0, we're removing the head
         if i == 0:
             self.head = self.head.next
@@ -45,11 +50,16 @@ class SLinkedList:
             # remove the current node by setting prev.next to nxt
             prev = self.get(i-1)
             prev.next = nxt
+        self.count = self.count - 1
 
-    # stack stuff
-    def push(self, n):
-        n.next = self.head
-        self.head = n 
+    # per the code in the book, we push a val and not a node
+    def push(self, val):
+        node = Node(val)
+        node.next = self.head
+        self.head = node
+        if self.size == 0:
+            self.tail = node
+        self.size = self.size + 1
         
     def pop(self):
         if self.head:
