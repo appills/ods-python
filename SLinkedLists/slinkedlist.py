@@ -2,27 +2,13 @@ from node import Node
 
 class SLinkedList:
     head = False
+    tail = False
     
-    def __init__(self, head):
-        self.head = head
-
-    def reverse(self):
-        prev = False
-        node = self.head
-        while node:
-            tmp = node.next
-            node.next = prev
-            prev = node
-            node = tmp
-        self.head = prev
-            
-    def values(self):
-        vals = []
-        node = self.head
-        while node:
-            vals.append(node.val)
-            node =  node.next
-        return vals
+    def __init__(self, head = False, tail = False):
+        if head:
+            self.head = head
+        if tail:
+            self.tail = tail
     
     # get the ith   
     def get(self, i):
@@ -30,16 +16,17 @@ class SLinkedList:
         count = 0
         if i == 0:
             return node
-        while count < i:
+        while node and count < i:
             node = node.next
             count = count + 1
         return node
             
-    # set the ith node to val
+    # set the ith node.val to val - the book is ambiguous by this & add() which is why I'm creating append()
     def set(self, i, val):
         node = self.get(i)
-        node.val = val
-        
+        if node:
+            node.val = val
+
     # add val to the ith node  
     def add(self, i, val):
         node = self.get(i)
@@ -58,6 +45,52 @@ class SLinkedList:
             # remove the current node by setting prev.next to nxt
             prev = self.get(i-1)
             prev.next = nxt
+
+    # stack stuff
+    def push(self, n):
+        n.next = self.head
+        self.head = n 
+        
+    def pop(self):
+        if self.head:
+            n = self.head
+            self.head = self.head.next
+            return n
+        return self.head
+        
+    def append(self, node):
+        if self.tail:
+            # in a double linked list you'd want to update node.prev as well
+            self.tail.next = node
+        # we'll handle no head in the future if needed
+        self.tail = node
+    
+    # todo this, it might be a d-list thing? I thought there was constant time alg for this?
+    def deque(self):
+        tmp = self.tail
+        self.tail = False
+        return tmp
+    
+    # order stuff
+    def reverse(self):
+        prev = False
+        node = self.head
+        while node:
+            tmp = node.next
+            node.next = prev
+            prev = node
+            node = tmp
+        self.head = prev
+            
+    def values(self):
+        vals = []
+        node = self.head
+        while node:
+            vals.append(node.val)
+            node =  node.next
+        return vals
+            
+
             
     def second_last(self):
         node = self.get(0)
@@ -69,8 +102,7 @@ class SLinkedList:
         
     def check_size(self, n):
         return self.size() == n
-    
-    # lol could've just counted self.values()
+        
     def size(self):
         count = 0
         node = self.head
