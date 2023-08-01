@@ -32,7 +32,7 @@ class SLinkedList:
             return True
         return False
 
-    # add val to the ith node  
+    # add val to the ith node, return new value
     def add(self, i, val):
         node = self.get(i)
         if node:
@@ -78,18 +78,14 @@ class SLinkedList:
         self.size = self.size + 1
         
     def pop(self):
-        if self.head:
-            n = self.head
-            self.head = self.head.next
-            return n
-        return self.head
-        
-    def append(self, node):
-        if self.tail:
-            # in a double linked list you'd want to update node.prev as well
-            self.tail.next = node
-        # we'll handle no head in the future if needed
-        self.tail = node
+        if self.size == 0:
+            return False
+        val = self.head.val
+        self.head = self.head.next
+        self.size = self.size - 1
+        if self.size == 0:
+            self.tail = False
+        return val
     
     # todo this, it might be a d-list thing? I thought there was constant time alg for this?
     def deque(self):
