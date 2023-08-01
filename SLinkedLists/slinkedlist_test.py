@@ -104,10 +104,13 @@ class SLinkedListTest(unittest.TestCase):
         
     # vaguely a data provider
     def get_slinkedlist(self):
-        tail = Node(False, 3)
-        body = Node(tail, 2)
-        head = Node(body, 1)
-        slinked = SLinkedList(head)
+        tail = Node(3)
+        body = Node(2)
+        head = Node(1)
+        slinked = SLinkedList()
+        slinked.push(3)
+        slinked.push(2)
+        slinked.push(1)
         return slinked
     
 if __name__ == '__main__':

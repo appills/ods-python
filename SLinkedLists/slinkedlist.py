@@ -127,9 +127,9 @@ class SLinkedList:
         return self.get(count - 1)
         
     def check_size(self, n):
-        return self.size() == n
+        return self.size == n
         
-    def size(self):
+    def count(self):
         count = 0
         node = self.head
         while node:
