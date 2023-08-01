@@ -145,6 +145,33 @@ class SLinkedListTest(unittest.TestCase):
         self.assertEqual(3, actual)
         self.assertEqual(False, slinked.head)
         self.assertEqual(False, slinked.tail)
+    
+    # test FIFO/LILO queue functionality
+    def test_queue(self):
+        # make sure it instantiated correctly
+        slinked = SLinkedList()
+        self.assertEqual(0, slinked.size)
+        self.assertEqual(False, slinked.head)
+        self.assertEqual(False, slinked.tail)
+        # enqueue means we joined the end of the line, or the tail of the list
+        actual = slinked.enqueue(1)
+        self.assertEqual(actual, True)
+        self.assertEqual(1, slinked.size)
+        self.assertEqual(1, slinked.tail.val)
+        self.assertEqual(1, slinked.head.val)
+        
+        actual = slinked.enqueue(2)
+        self.assertEqual(actual, True)
+        self.assertEqual(2, slinked.size)
+        self.assertEqual(2, slinked.tail.val)
+        self.assertEqual(1, slinked.head.val)
+        # make sure dequeue obeys w.r.t head & tail
+        actual = slinked.dequeue()
+        self.assertEqual(1, actual)
+        self.assertEqual(1, slinked.size)
+        self.assertEqual(2, slinked.head.val)
+        self.assertEqual(2, slinked.tail.val)
+        
         
     # vaguely a data provider
     def get_slinkedlist(self):
