@@ -1,3 +1,5 @@
+from math import ceil
+
 class DNode:
     prev = False
     next = False
@@ -8,20 +10,19 @@ class DNode:
         self.next = False
 
 class DLinkedList:
-    head = False
-    tail = False
+    dummy = False
     size = 0
     
     def __init__(self):
         self.size = 0
         self.dummy = DNode(None)
-        self.dummy.prev = dummy
-        self.dummy.next = dummy
+        self.dummy.prev = self.dummy
+        self.dummy.next = self.dummy
         
     def get_node(self, i):
         p = False
         # if the position is less than half the size, start searching from the beginning
-        if i < self.size/2;
+        if i < (self.size / 2):
             p = self.dummy.next # this cycles to head
             c = 0
             while c < i:
@@ -60,7 +61,7 @@ class DLinkedList:
     # append a new node to the list with value x
     def add(self, i, x):
         n = self.get_node(i)
-        return self.add_before(n, x)
+        return self.add_node_before(n, x)
     
     # remove w from the list
     def remove_node(self, w):
@@ -72,3 +73,23 @@ class DLinkedList:
     def remove(self, i):
         node = self.get_node(i)
         self.remove_node(node)
+        
+    def is_palindrome(self):
+        if self.size == 0:
+            return True
+        if self.size == 1:
+            return True
+        
+        is_palindrome = True
+        nh = self.get_node(0)
+        nt = self.get_node(self.size - 1)
+        i = 0
+        num_checks = ceil(self.size / 2)
+        while i < self.size:
+            if nh.val != nt.val:
+                is_palindrome = False
+            i = i + 1
+            nh = nh.next
+            nt = nt.prev
+        return is_palindrome
+            
