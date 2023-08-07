@@ -9,6 +9,7 @@ class DNode:
         self.prev = False
         self.next = False
 
+# goal: rework this to get all returns to be DNode
 class DLinkedList:
     dummy = False
     size = 0
@@ -20,7 +21,7 @@ class DLinkedList:
         self.dummy.next = self.dummy
         
     def get_node(self, i):
-        p = False
+        p = self.dummy
         # if the position is less than half the size, start searching from the beginning
         if i < (self.size / 2):
             p = self.dummy.next # this cycles to head
@@ -29,17 +30,16 @@ class DLinkedList:
                 c = c + 1
                 p = p.next
         else:
-            p = self.dummy
             c = 0
             while c < self.size-i:
                 c = c + 1
                 p = p.prev
         return p
     
-    def get(self, i):
+    def get_val(self, i):
         return self.get_node(i).val
     
-    def set(self, i, val):
+    def swap_val(self, i, val):
         u = self.get_node(i)
         y = u.val
         u.val = val 
@@ -47,7 +47,7 @@ class DLinkedList:
     
     # given a reference to a node, w
     # we want to insert a new node, u before w
-    def add_node_before(self, w, val):
+    def insert_node_before(self, w, val):
         u = DNode(val)
         u.prev = w.prev
         u.next = w
@@ -59,20 +59,22 @@ class DLinkedList:
         return u
     
     # append a new node to the list with value x
-    def add(self, i, x):
+    def insert_val_before(self, i, x):
         n = self.get_node(i)
-        return self.add_node_before(n, x)
+        return self.insert_node_before(n, x)
     
     # remove w from the list
     def remove_node(self, w):
         w.prev.next = w.next
         w.next.prev = w.prev
         self.size = self.size - 1
+        return w
     
     # remove the ith node from the list
-    def remove(self, i):
+    def remove_index(self, i):
         node = self.get_node(i)
         self.remove_node(node)
+        return node
         
     def is_palindrome(self):
         if self.size == 0:
@@ -92,4 +94,19 @@ class DLinkedList:
             nh = nh.next
             nt = nt.prev
         return is_palindrome
-            
+        
+    def truncate(self, i):
+        if i == 0:
+            return self
+        # essentially "dequeueing" from self and "pushing" onto second
+        second = DLinkedList()
+        tail = self.get_node(self.size - 1) #dequeue the tail
+        second_head = second.get_node(0) #push onto this
+        j = 0
+        size = self.size
+        while j < size-i:
+            u = self.remove_node(tail)
+            tail = u.prev
+            second_head = second.insert_node_before(second_head, u.val)
+            j = j + 1
+        return second
