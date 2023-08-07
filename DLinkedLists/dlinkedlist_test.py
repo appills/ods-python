@@ -42,6 +42,13 @@ class DLinkedListTest(unittest.TestCase):
     # Exercise 3..10
     def test_absorb(self):
         dlinked = self.get_dlinkedlist()
+        dlinked_size = dlinked.size
+        second = self.get_dlinkedlist()
+        second_size = second.size
+        actual_second = dlinked.absorb(second)
+        self.assertEqual(second_size + dlinked_size, dlinked.size)
+        
+        
     # Exercise 3..11
     def test_deal(self):
         dlinked = self.get_dlinkedlist()

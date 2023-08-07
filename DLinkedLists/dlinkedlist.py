@@ -96,8 +96,6 @@ class DLinkedList:
         return is_palindrome
         
     def truncate(self, i):
-        if i == 0:
-            return self
         # essentially "dequeueing" from self and "pushing" onto second
         second = DLinkedList()
         tail = self.get_node(self.size - 1) #dequeue the tail
@@ -110,3 +108,18 @@ class DLinkedList:
             second_head = second.insert_node_before(second_head, u.val)
             j = j + 1
         return second
+        
+    def absorb(self, dll):
+        dll_head = dll.get_node(0)
+        # inserting before the head, due to the cyclical nature, should "append"
+        head = self.get_node(0)
+        i = 0
+        dll_size = dll.size
+        while i < dll_size:
+            u = dll.remove_node(dll_head)
+            dll_head = u.prev
+            head = self.insert_node_before(head, u.val).prev
+            
+            i = i + 1
+        return dll
+        
